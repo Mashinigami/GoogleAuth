@@ -6,7 +6,9 @@ const keys = require('./config/keys');
 require('./models/User');
 require('./services/passport');
 
-mongoose.connect(keys.mongoURI);
+mongoose.connect(keys.mongoURI).then(() => {
+    console.log('Conectado ao db');
+});
 
 const app = express();
 
@@ -23,4 +25,6 @@ require('./routes/authRoutes')(app);
 require('./routes/youtubeRoutes')(app);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT);
+app.listen(PORT, () => {
+    console.log('Escutando na porta 5000');
+});

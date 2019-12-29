@@ -4,7 +4,7 @@ module.exports = app => {
   app.get(
     '/auth/google',
     passport.authenticate('google', {
-      scope: ['profile', 'email', 'https://www.googleapis.com/auth/youtube'],
+      scope: ['profile', 'email'],
       prompt: 'select_account'
     })
   );
@@ -15,11 +15,10 @@ module.exports = app => {
     res.send('deleted user');
   });
 
-  app.get(
-    '/auth/google/callback',
-    passport.authenticate('google'),
+  app.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
     (req, res) => {
-      res.redirect('/surveys');
+      res.redirect('/');
     }
   );
 
